@@ -1,12 +1,12 @@
 import Sequelize from 'sequelize';
 require('dotenv').config()
 
-new Sequelize(
-    process.env.POSTGRESQL_USER,
-    process.env.POSTGRESQL_PASSWORD,
-    process.env.POSTGRESQL_DB,
+export const sequelize = new Sequelize(
+    'postgres',
+    '12345',
+    'apidisney',
     {
-        host: POSTGRESQL_HOST,
+        host: 'localhost',
         dialect: 'postgres',
         pool: {
             max: 5,
