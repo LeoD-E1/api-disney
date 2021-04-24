@@ -46,6 +46,6 @@ CREATE TABLE IF NOT EXISTS series_characters(
 CREATE TABLE IF NOT EXISTS movies_characters(
     id_movie INTEGER REFERENCES movies(id_movie),
     id_character INTEGER REFERENCES characters(id_character),
-    PRIMARY KEY (id_movies, id_character),
+    PRIMARY KEY (id_movie, id_character),
     dataCreation TIMESTAMP default CURRENT_TIMESTAMP
 );

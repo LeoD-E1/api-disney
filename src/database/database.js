@@ -1,10 +1,9 @@
 import Sequelize from 'sequelize';
-require('dotenv').config()
 
 export const sequelize = new Sequelize(
+    'apidisney',
     'postgres',
     '12345',
-    'apidisney',
     {
         host: 'localhost',
         dialect: 'postgres',

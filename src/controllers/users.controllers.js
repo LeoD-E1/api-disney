@@ -1,9 +1,26 @@
 import bcrypt from 'bcrypt';
 import User from '../models/users.models'
 
-export const register = (req, res) => {
-    const { email, password } = req.body
-    res.json({ email, password });
+export const register = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const hashedPassword = await encodePassword(password);
+        let newUser = await User.create({
+            email: email,
+            password: hashedPassword
+        }, {
+            fields: ['email', 'password']
+        })
+
+        if (newUser) {
+            res.json({ newUser })
+        } else {
+            res.send('User was not created ')
+        }
+    } catch (err) {
+        console.log(err)
+    }
+
 }
 
 export const login = () => {
