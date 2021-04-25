@@ -41,7 +41,7 @@ export const createCharacter = async (req, res) => {
       fields: ['img', 'name', 'age', 'weight', 'history']
     });
     if (newCharacter) {
-      res.send('Character was created Successfully');
+      res.send(`Character ${name} was created Successfully`);
       console.log({ data: newCharacter })
     } else {
       res.send('Something goes wrong')
@@ -52,12 +52,49 @@ export const createCharacter = async (req, res) => {
 
 }
 
-export const updateCharacterById = () => {
+export const updateCharacterById = async (req, res) => {
+  const { id } = req.params;
+  const { img, name, age, weight, history } = req.body;
+  const characters = await Character.findAll({
+    attributes: ['id_character', 'img', 'name', 'age', 'weight', 'history'],
+    where: {
+      id_character: id
+    }
+  })
+  if (characters.length > 0) {
+    characters.forEach(async character => {
+      await character.update({
+        img,
+        name,
+        age,
+        weight,
+        history
+      })
+    });
+  }
+
+  return res.json({
+    message: 'Character updated Successfully',
+    data: characters
+  });
 
 }
 
-export const deleteCharacterById = () => {
-
+export const deleteCharacterById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const countCharacter = await Character.destroy({
+      where: {
+        id_character: id
+      }
+    })
+    res.json({
+      message: 'Item Deleted successfully',
+      count: countCharacter
+    });
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const searchCharacter = () => {

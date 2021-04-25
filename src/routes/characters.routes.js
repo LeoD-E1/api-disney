@@ -19,7 +19,7 @@ router.post('/create', createCharacter)
 // update a character by id
 router.put('/update/:id', updateCharacterById)
 //Delete a Character by id
-router.delete('/delete', deleteCharacterById)
+router.delete('/delete/:id', deleteCharacterById)
 // Endpoint to search by name and filter by weight, age or Movie/Serie 
 router.get('/searcharacter/:name', searchCharacter)
 
