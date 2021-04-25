@@ -1,11 +1,33 @@
 import Character from '../models/characters.models';
 
-export const getListCharacters = () => {
-
+export const getListCharacters = async (req, res) => {
+  try {
+    const characters = await Character.findAll({
+      attributes: ['img', 'name']
+    })
+    if (characters) {
+      res.json({ data: characters })
+    } else {
+      res.send('There are no characters in the list')
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
-export const getFullCharacters = () => {
 
+export const getFullCharacters = async (req, res) => {
+  try {
+    const characters = await Character.findAll()
+    if (characters) {
+      res.json({ data: characters })
+    } else {
+      res.send('There are no characters in the list')
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
+
 export const createCharacter = async (req, res) => {
   try {
     const { img, name, age, weight, history } = req.body;
@@ -29,9 +51,11 @@ export const createCharacter = async (req, res) => {
   }
 
 }
+
 export const updateCharacterById = () => {
 
 }
+
 export const deleteCharacterById = () => {
 
 }
