@@ -10,8 +10,8 @@ const Movie = sequelize.define('movies', {
         allowNull: false,
         validate: { min: 1, max: 5 }
     },
-    gender: { type: DataTypes.STRING, allowNull: false },
-    releaseDate: { type: DataTypes.DATE, allowNull: false }
+    releasedate: { type: DataTypes.DATEONLY, allowNull: false },
+    gender: { type: DataTypes.STRING, allowNull: false }
 }, {
     tableName: 'movies',
     timestamps: false

@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS movies (
         rating > 0
         and rating < 6
     ),
+    releaseDate DATE NOT NULL CHECK (releaseDate > '1900-01-01'),
     gender VARCHAR (70) NOT NULL CHECK(gender <> ''),
-    releaseDate DATE NOT NULL CHECK (releaseDate > '1937-01-01'),
     dataCreation TIMESTAMP default CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS series_characters(
