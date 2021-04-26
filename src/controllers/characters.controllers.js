@@ -17,7 +17,7 @@ export const getListCharacters = async (req, res) => {
 
 export const getFullCharacters = async (req, res) => {
   try {
-    const characters = await Character.findAll()
+    let characters = await Character.findAll()
     if (characters) {
       res.json({ data: characters })
     } else {
@@ -31,7 +31,7 @@ export const getFullCharacters = async (req, res) => {
 export const createCharacter = async (req, res) => {
   try {
     const { img, name, age, weight, history } = req.body;
-    const newCharacter = await Character.create({
+    let newCharacter = await Character.create({
       img,
       name,
       age,
@@ -49,48 +49,54 @@ export const createCharacter = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-
 }
 
 export const updateCharacterById = async (req, res) => {
-  const { id } = req.params;
-  const { img, name, age, weight, history } = req.body;
-  const characters = await Character.findAll({
-    attributes: ['id_character', 'img', 'name', 'age', 'weight', 'history'],
-    where: {
-      id_character: id
-    }
-  })
-  if (characters.length > 0) {
-    characters.forEach(async character => {
-      await character.update({
-        img,
-        name,
-        age,
-        weight,
-        history
+  try {
+    const { id } = req.params;
+    const { img, name, age, weight, history } = req.body;
+    let characters = await Character.findAll({
+      attributes: ['id_character', 'img', 'name', 'age', 'weight', 'history'],
+      where: {
+        id_character: id
+      }
+    })
+    if (characters.length > 0) {
+      characters.forEach(async character => {
+        await character.update({
+          img,
+          name,
+          age,
+          weight,
+          history
+        })
+      });
+    } else {
+      res.json({
+        message: 'ID provided not exist'
       })
+    }
+
+    return res.json({
+      message: 'Character updated Successfully',
+      data: characters
     });
+  } catch (error) {
+    console.log(error);
   }
-
-  return res.json({
-    message: 'Character updated Successfully',
-    data: characters
-  });
-
 }
 
 export const deleteCharacterById = async (req, res) => {
   try {
     const { id } = req.params;
-    const countCharacter = await Character.destroy({
+    let countDeletedCharacters = await Character.destroy({
       where: {
         id_character: id
       }
     })
     res.json({
       message: 'Item Deleted successfully',
-      count: countCharacter
+      count: countDeletedCharacters
     });
   } catch (error) {
     console.log(error)

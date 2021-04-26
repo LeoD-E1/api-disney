@@ -29,19 +29,23 @@ export const register = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-  const { email, password } = req.body // I recover the data from body through request
-  const user = await checkUser(email) // Run checkUser to check if the user is in the database 
-  if (user) {
-    const matchedPassword = await bcrypt.compare(password, user.password) // If it is in the database it is verified if the passwords match
-    if (matchedPassword) {
-      const token = getToken(email) // If passwords match then, user get a token 
-      console.log(typeof (token))
-      res.send(`Welcome User ${email}`)
+  try {
+    const { email, password } = req.body // I recover the data from body through request
+    const user = await checkUser(email) // Run checkUser to check if the user is in the database 
+    if (user) {
+      const matchedPassword = await bcrypt.compare(password, user.password) // If it is in the database it is verified if the passwords match
+      if (matchedPassword) {
+        const token = getToken(email) // If passwords match then, user get a token 
+        console.log(typeof (token))
+        res.send(`Welcome User ${email}`)
+      } else {
+        res.send('The passwords No match')
+      }
     } else {
-      res.send('The passwords No match')
+      res.send('User not exists')
     }
-  } else {
-    res.send('User not exists')
+  } catch (error) {
+    console.log(error);
   }
 }
 // Function to hash a password
