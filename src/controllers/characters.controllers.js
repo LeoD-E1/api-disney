@@ -41,10 +41,14 @@ export const createCharacter = async (req, res) => {
       fields: ['img', 'name', 'age', 'weight', 'history']
     });
     if (newCharacter) {
-      res.send(`Character ${name} was created Successfully`);
+      res.json({
+        message: `Character ${name} was created Successfully`
+      });
       console.log({ data: newCharacter })
     } else {
-      res.send('Something goes wrong')
+      res.json({
+        message: 'Something has gone wrong'
+      });
     }
   } catch (error) {
     console.log(error);

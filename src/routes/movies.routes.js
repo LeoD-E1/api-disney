@@ -1,6 +1,7 @@
 import { Router } from 'express';
-const router = Router();
 import { getMovies, getFullMovies, createMovie, updateMovieById, deleteMovieById, searchMovie } from '../controllers/movies.controllers'
+
+const router = Router();
 
 // Only show img, title and creation date
 router.get('/', getMovies);

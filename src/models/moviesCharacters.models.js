@@ -4,16 +4,14 @@ import Movie from '../models/movies.models';
 import Character from '../models/characters.models';
 
 const MoviesCharacters = sequelize.define('movies_characters', {
-    id_movie: DataTypes.INTEGER,
-    references: {
-        model: Movie,
-        key: 'id_movie'
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
     },
-    id_character: DataTypes.INTEGER,
-    references: {
-        model: Character,
-        key: 'id_character'
-    }
+    name: DataTypes.STRING,
+    title: DataTypes.STRING
 }, {
     tableName: 'movies_characters',
     timestamps: false
