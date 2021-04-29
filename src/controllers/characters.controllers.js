@@ -103,7 +103,8 @@ export const deleteCharacterById = async (req, res) => {
     let countDeletedCharacters = await Character.destroy({
       where: {
         id_character: id
-      }
+      },
+      include: Movie
     })
     res.json({
       message: 'Item Deleted successfully',

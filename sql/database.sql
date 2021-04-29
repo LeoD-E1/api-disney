@@ -38,14 +38,14 @@ CREATE TABLE IF NOT EXISTS movies (
     dataCreation TIMESTAMP default CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS series_characters(
-    id_serie INTEGER REFERENCES series(id_serie),
-    id_character INTEGER REFERENCES characters(id_character),
+    id_serie INTEGER REFERENCES series(id_serie) ON DELETE CASCADE ON UPDATE CASCADE,
+    id_character INTEGER REFERENCES characters(id_character) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (id_serie, id_character),
     dataCreation TIMESTAMP default CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS movies_characters(
-    id_movie INTEGER REFERENCES movies(id_movie),
-    id_character INTEGER REFERENCES characters(id_character),
+    id_movie INTEGER REFERENCES movies(id_movie) ON DELETE CASCADE ON UPDATE CASCADE,
+    id_character INTEGER REFERENCES characters(id_character) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (id_movie, id_character),
     dataCreation TIMESTAMP default CURRENT_TIMESTAMP
 );

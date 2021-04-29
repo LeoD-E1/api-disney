@@ -1,4 +1,5 @@
 import Movie from '../models/movies.models';
+import Character from '../models/characters.models'
 
 export const getMovies = async (req, res) => {
   try {
@@ -21,7 +22,7 @@ export const getMovies = async (req, res) => {
 
 export const getFullMovies = async (req, res) => {
   try {
-    let movies = await Movie.findAll()
+    let movies = await Movie.findAll({ include: Character })
     if (movies) {
       res.json({
         movies
@@ -112,4 +113,16 @@ export const deleteMovieById = async (req, res) => {
 }
 
 export const searchMovie = async (req, res) => {
+  const { title } = req.params;
+  const movies = await Movie.findAll({
+    where: {
+      title
+    },
+    include: Character
+  })
+  if (movies) {
+    res.json({
+      movies
+    })
+  }
 }

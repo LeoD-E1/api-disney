@@ -9,7 +9,16 @@ const Character_Serie = sequelize.define('series_characters', {}, {
     tableName: 'series_characters'
 })
 
-Character.belongsToMany(Serie, { through: Character_Serie, foreignKey: id_character });
-Serie.belongsToMany(Character, { through: Character_Serie, foreignKey: id_serie });
+Character.belongsToMany(Serie, {
+    through: Character_Serie,
+    foreignKey: id_character,
+    onDelete: 'CASCADE'
+});
+
+Serie.belongsToMany(Character, {
+    through: Character_Serie,
+    foreignKey: id_serie,
+    onDelete: 'CASCADE'
+});
 
 export default Character_Serie;
