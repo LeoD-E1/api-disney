@@ -31,7 +31,7 @@ export const getFullSeries = async (req, res) => {
 export const createSerie = async (req, res) => {
   try {
     const { img, title, rating, releasedate, gender } = req.body
-    const serie = await Serie.create({
+    const newSerie = await Serie.create({
       img,
       title,
       rating,
@@ -40,7 +40,8 @@ export const createSerie = async (req, res) => {
     }, {
       fields: ['img', 'title', 'rating', 'releasedate', 'gender']
     })
-    if (serie) {
+
+    if (newSerie) {
       res.json({
         message: `${title} was saved successfully`
       })
@@ -92,7 +93,6 @@ export const deleteSerieById = async (req, res) => {
         id_serie: id
       }
     })
-
     res.json({
       message: 'Item has been deleted Successfully',
       countDeletedSeries

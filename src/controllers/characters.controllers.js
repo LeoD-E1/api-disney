@@ -1,4 +1,7 @@
 import Character from '../models/characters.models';
+import Movie from '../models/movies.models';
+import Character_Movie from '../models/Character_Movie.models'
+
 
 export const getListCharacters = async (req, res) => {
   try {
@@ -17,7 +20,7 @@ export const getListCharacters = async (req, res) => {
 
 export const getFullCharacters = async (req, res) => {
   try {
-    let characters = await Character.findAll()
+    let characters = await Character.findAll({ include: Movie })
     if (characters) {
       res.json({ data: characters })
     } else {
@@ -30,7 +33,7 @@ export const getFullCharacters = async (req, res) => {
 
 export const createCharacter = async (req, res) => {
   try {
-    const { img, name, age, weight, history } = req.body;
+    const { img, name, age, weight, history, id_movie } = req.body;
     let newCharacter = await Character.create({
       img,
       name,
@@ -38,8 +41,12 @@ export const createCharacter = async (req, res) => {
       weight,
       history
     }, {
-      fields: ['img', 'name', 'age', 'weight', 'history']
-    });
+      fields: ['img', 'name', 'age', 'weight', 'history'],
+    })
+
+    await newCharacter.addMovies([id_movie])
+
+
     if (newCharacter) {
       res.json({
         message: `Character ${name} was created Successfully`
@@ -107,6 +114,19 @@ export const deleteCharacterById = async (req, res) => {
   }
 }
 
-export const searchCharacter = () => {
+export const searchCharacter = async (req, res) => {
+  const { name } = req.params;
 
+  const character = await Character.findAll({
+    where: { name },
+    include: Movie
+  })
+  if (!character) {
+    res.json({
+      message: 'Have not Users with theses attributes'
+    })
+  }
+  res.json({
+    character
+  })
 }

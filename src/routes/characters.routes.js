@@ -21,6 +21,6 @@ router.put('/update/:id', updateCharacterById)
 //Delete a Character by id
 router.delete('/delete/:id', deleteCharacterById)
 // Endpoint to search by name and filter by weight, age or Movie/Serie 
-router.get('/searcharacter/:name', searchCharacter)
+router.get('/find/:name', searchCharacter)
 
 export default router;

@@ -17,4 +17,5 @@ const Movie = sequelize.define('movies', {
     timestamps: false
 });
 
+
 export default Movie;
