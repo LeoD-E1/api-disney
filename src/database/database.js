@@ -1,12 +1,19 @@
 import Sequelize from 'sequelize';
 
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+require('dotenv').config({
+    path: `.env.${NODE_ENV}`
+})
+
+
 export const sequelize = new Sequelize(
-    'apidisney',
-    'postgres',
-    '12345',
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
-        host: 'localhost',
-        dialect: 'postgres',
+        host: process.env.DB_HOST,
+        dialect: process.env.DB_DIALECT,
         pool: {
             max: 5,
             min: 0,
