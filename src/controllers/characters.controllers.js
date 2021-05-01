@@ -1,6 +1,6 @@
 import Character from '../models/characters.models';
 import Movie from '../models/movies.models';
-import Character_Movie from '../models/Character_Movie.models'
+
 
 
 export const getListCharacters = async (req, res) => {

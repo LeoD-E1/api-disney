@@ -36,7 +36,7 @@ export const login = async (req, res) => {
       const matchedPassword = await bcrypt.compare(password, user.password) // If it is in the database it is verified if the passwords match
       if (matchedPassword) {
         const token = getToken(email) // If passwords match then, user get a token 
-        console.log(typeof (token))
+        console.log(token)
         res.send(`Welcome User ${email}`)
       } else {
         res.send('The passwords No match')

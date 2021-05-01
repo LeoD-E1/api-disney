@@ -1,5 +1,6 @@
 import Movie from '../models/movies.models';
-import Character from '../models/characters.models'
+import Character from '../models/characters.models';
+import Character_Movie from '../models/Character_Movie.models'
 
 export const getMovies = async (req, res) => {
   try {
