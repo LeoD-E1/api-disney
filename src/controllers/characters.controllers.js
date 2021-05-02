@@ -130,9 +130,9 @@ export const searchCharacter = async (req, res) => {
     where: { name },
     include: Movie
   })
-  if (!character) {
+  if (character == 0) {
     res.json({
-      message: 'Have not Users with theses attributes'
+      message: 'Have not Characters with theses attributes'
     })
   }
   res.json({
