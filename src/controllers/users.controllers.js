@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import User from '../models/users.models';
 import jwt from 'jsonwebtoken';
+import SECRET_KEY from '../database/database'
 
 export const register = async (req, res) => {
   try {
@@ -18,10 +19,10 @@ export const register = async (req, res) => {
       if (newUser) {
         res.json({ data: newUser }).status(200)
       } else {
-        res.send('User was not created ')
+        res.json({ message: 'User was not created' })
       }
     } else {
-      res.send('User already exists')
+      res.json({ message: 'User already exists' })
     }
   } catch (err) {
     console.log(err)
@@ -36,13 +37,12 @@ export const login = async (req, res) => {
       const matchedPassword = await bcrypt.compare(password, user.password) // If it is in the database it is verified if the passwords match
       if (matchedPassword) {
         const token = getToken(email) // If passwords match then, user get a token 
-        console.log(token)
-        res.send(`Welcome User ${email}`)
+        res.json({ message: `Welcome User ${email}`, token })
       } else {
-        res.send('The passwords No match')
+        res.json({ message: 'The passwords No match' })
       }
     } else {
-      res.send('User not exists')
+      res.json({ message: 'User not exists' })
     }
   } catch (error) {
     console.log(error);
@@ -66,5 +66,7 @@ const checkUser = async (email) => {
 }
 // Function to get a token from jwt
 const getToken = (email) => {
-  return jwt.sign({ data: email, expiresIn: '2h' }, 'secret_key')
+  return jwt.sign({ data: email, expiresIn: '2h' }, process.env.SECRET_KEY)
 };
+
+

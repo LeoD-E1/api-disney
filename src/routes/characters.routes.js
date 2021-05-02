@@ -1,14 +1,18 @@
 import { Router } from 'express';
+
 import {
-    getListCharacters,
-    getFullCharacters,
-    createCharacter,
-    updateCharacterById,
-    deleteCharacterById,
-    searchCharacter
+  getListCharacters,
+  getFullCharacters,
+  createCharacter,
+  updateCharacterById,
+  deleteCharacterById,
+  searchCharacter
 } from '../controllers/characters.controllers';
 
+
 const router = Router();
+
+
 
 // List of characters where only img and the name of the respective character are shown
 router.get('/', getListCharacters)

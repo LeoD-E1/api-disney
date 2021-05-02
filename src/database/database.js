@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
+export const SECRET_KEY = process.env.SECRET_KEY;
 
 require('dotenv').config({
     path: `.env.${NODE_ENV}`
 })
-
 
 export const sequelize = new Sequelize(
     process.env.DB_NAME,

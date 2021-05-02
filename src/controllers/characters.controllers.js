@@ -1,8 +1,6 @@
 import Character from '../models/characters.models';
 import Movie from '../models/movies.models';
 
-
-
 export const getListCharacters = async (req, res) => {
   try {
     const characters = await Character.findAll({
@@ -33,7 +31,7 @@ export const getFullCharacters = async (req, res) => {
 
 export const createCharacter = async (req, res) => {
   try {
-    const { img, name, age, weight, history, id_movie } = req.body;
+    const { img, name, age, weight, history, id_movie, id_serie } = req.body;
     let newCharacter = await Character.create({
       img,
       name,
@@ -44,7 +42,17 @@ export const createCharacter = async (req, res) => {
       fields: ['img', 'name', 'age', 'weight', 'history'],
     })
 
-    await newCharacter.addMovies([id_movie])
+    if (id_serie == 0) {
+      console.log('pass')
+    } else {
+      await newCharacter.addSeries([id_serie])
+    }
+
+    if (id_serie == 0) {
+      console.log('pass')
+    } else {
+      await newCharacter.addMovies([id_movie])
+    }
 
 
     if (newCharacter) {
