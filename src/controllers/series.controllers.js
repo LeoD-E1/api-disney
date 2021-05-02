@@ -1,9 +1,12 @@
 import Serie from '../models/series.models'
+import Character from '../models/characters.models';
+import Character_Serie from '../models/Character_Serie.models';
 
 export const getSeries = async (req, res) => {
   try {
     const series = await Serie.findAll({
-      attributes: ['img', 'title', 'releasedate']
+      attributes: ['img', 'title', 'releasedate'],
+      include: Character
     });
     if (serie) {
       res.json({
@@ -18,7 +21,7 @@ export const getSeries = async (req, res) => {
 }
 
 export const getFullSeries = async (req, res) => {
-  const series = await Serie.findAll();
+  const series = await Serie.findAll({ include: Character });
   if (series) {
     res.json({
       series
@@ -30,7 +33,7 @@ export const getFullSeries = async (req, res) => {
 
 export const createSerie = async (req, res) => {
   try {
-    const { img, title, rating, releasedate, gender } = req.body
+    const { img, title, rating, releasedate, gender } = req.body;
     const newSerie = await Serie.create({
       img,
       title,
@@ -85,16 +88,12 @@ export const updateSerieById = async (req, res) => {
 export const deleteSerieById = async (req, res) => {
   try {
     const { id } = req.params;
-    const found = await Serie.findAll({
-      where: { id_serie: id }
-    })
     let countDeletedSeries = await Serie.destroy({
-      where: {
-        id_serie: id
-      }
+      where: { id_serie: id },
+      include: Character
     })
     res.json({
-      message: 'Item has been deleted Successfully',
+      message: `Serie ${id} has been deleted Successfully`,
       countDeletedSeries
     })
   } catch (error) {
@@ -103,7 +102,20 @@ export const deleteSerieById = async (req, res) => {
 }
 
 export const searchSerie = async (req, res) => {
-
+  try {
+    const { title } = req.params;
+    const series = await Serie.findAll({
+      where: {
+        title
+      },
+      include: Character
+    })
+    res.json({
+      series
+    })
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 

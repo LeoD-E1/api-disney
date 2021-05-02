@@ -11,13 +11,13 @@ const Character_Serie = sequelize.define('series_characters', {}, {
 
 Character.belongsToMany(Serie, {
     through: Character_Serie,
-    foreignKey: id_character,
+    foreignKey: 'id_character',
     onDelete: 'CASCADE'
 });
 
 Serie.belongsToMany(Character, {
     through: Character_Serie,
-    foreignKey: id_serie,
+    foreignKey: 'id_serie',
     onDelete: 'CASCADE'
 });
 
