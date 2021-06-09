@@ -92,7 +92,7 @@ export const deleteSerieById = async (req, res) => {
       where: { id_serie: id },
       include: Character
     })
-    res.json({
+    await res.json({
       message: `Serie ${id} has been deleted Successfully`,
       countDeletedSeries
     })
