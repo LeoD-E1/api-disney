@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt';
 import User from '../models/users.models';
+import { checkUser } from '../querys/Users/userFindOne'
+import { encodePassword } from '../helpers/hashPassword'
+import { getToken } from '../helpers/generateToken'
 
 require('dotenv').config()
 
@@ -40,25 +43,29 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body// I recover the data from body through request
-    const user = await checkUser(email) // Run checkUser to check if the user is in the database 
-    if (user) {
-      const matchedPassword = bcrypt.compare(password, user.password) // If it is in the database it is verified if the passwords match
-      if (matchedPassword) {
-        const token = getToken(user) // If passwords match then, user get a token 
-        return res.json({
-          message: `Welcome User ${email}`,
-          token
-        });
+    const { email, password } = req.body
+    const user = await checkUser(email)
 
-      } else {
-        return res.json({ message: 'The passwords No match' })
-      }
-    } else {
-      return res.json({ message: 'User not exists' })
+    if (!user) {
+      return res.json({
+        message: 'User not exists'
+      }).status(404)
     }
+
+    const matchedPassword = bcrypt.compare(password, user.password)
+    if (!matchedPassword) {
+      return res.json({
+        message: 'The passwords No match'
+      }).status(401)
+    }
+
+    const token = getToken(user)
+    return res.json({
+      message: `Welcome User ${email}`,
+      token
+    }).status(201)
+
   } catch (error) {
-    return error
+    return res.send(error).status(500)
   }
 }
-

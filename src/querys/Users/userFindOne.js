@@ -1,4 +1,4 @@
-import User from '../models/users.models';
+import User from '../../models/users.models';
 
 // Function to check a user by email
 export const checkUser = async (email) => {

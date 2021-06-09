@@ -1,6 +1,5 @@
 import express from 'express';
 import morgan from 'morgan';
-
 // Importing routes
 import characters from './routes/characters.routes';
 import movies from './routes/movies.routes';
