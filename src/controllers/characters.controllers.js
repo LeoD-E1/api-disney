@@ -6,11 +6,12 @@ export const getListCharacters = async (req, res) => {
     const characters = await Character.findAll({
       attributes: ['img', 'name']
     })
-    if (characters) {
-      res.json({ data: characters })
-    } else {
+    if (!characters) {
       res.send('There are no characters in the list')
     }
+
+    res.json({ characters }).status(200)
+
   } catch (error) {
     console.log(error);
   }

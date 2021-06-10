@@ -7,7 +7,7 @@ import { getToken } from '../helpers/generateToken'
 
 export const register = async (req, res) => {
   try {
-    const { email, password } = req.body
+    const { email, password, username } = req.body
     const user = await checkUser(email)
 
     if (user) {
@@ -19,9 +19,10 @@ export const register = async (req, res) => {
     const hashedPassword = await encodePassword(password);
     let newUser = await User.create({
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      username
     }, {
-      fields: ['email', 'password']
+      fields: ['email', 'password', 'username']
     });
 
     if (!newUser) {
