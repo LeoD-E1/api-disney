@@ -4,7 +4,6 @@ import { checkUser } from '../querys/Users/userFindOne'
 import { encodePassword } from '../helpers/hashPassword'
 import { getToken } from '../helpers/generateToken'
 
-require('dotenv').config()
 
 export const register = async (req, res) => {
   try {

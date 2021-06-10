@@ -17,8 +17,8 @@ app.use(express.json())
 
 // Routes
 app.use('/api/users', users);
-app.use('/api/characters', authToken, characters);
-app.use('/api/series', authToken, series);
-app.use('/api/movies', authToken, movies);
+app.use('/api/characters', /* authToken, */ characters);
+app.use('/api/series', /* authToken, */ series);
+app.use('/api/movies',/*  authToken, */ movies);
 
 export default app;
