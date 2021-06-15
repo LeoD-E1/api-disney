@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import User from '../models/users.models';
 import { checkUser } from '../querys/Users/userFindOne'
+import { checkUsername } from '../querys/Users/userFindByUsername'
 import { encodePassword } from '../helpers/hashPassword'
 import { getToken } from '../helpers/generateToken'
 
@@ -9,9 +10,10 @@ export const register = async (req, res) => {
   try {
     const { email, password, username } = req.body
     const user = await checkUser(email)
+    const alias = await checkUsername(username)
 
-    if (user) {
-      return res.status(401).json({
+    if (user || alias) {
+      return res.status(409).json({
         message: 'User already exists'
       })
     }
@@ -26,7 +28,7 @@ export const register = async (req, res) => {
     });
 
     if (!newUser) {
-      return res.json({
+      return res.status(500).json({
         message: 'User was not created'
       })
     }
@@ -34,7 +36,7 @@ export const register = async (req, res) => {
     res.json({
       data: newUser,
       token: getToken(newUser)
-    }).status(200)
+    }).status(201)
 
   } catch (err) {
     return res.send(err)

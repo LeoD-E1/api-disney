@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import users from '../routes/users.routes'
 
 require('dotenv').config()
 
@@ -8,9 +9,9 @@ async function authToken(req, res, next) {
   const token = await authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    res.json({
+    res.status(403).json({
       message: 'You have not the credentials, Login for it'
-    }).status(403);
+    }).redirect(users)
   }
 
   jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
