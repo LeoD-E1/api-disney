@@ -27,7 +27,7 @@ app.use(cors())
 // Routes
 app.use('/api/home',/*  authToken, */ home);
 app.use('/api/users', users);
-app.use('/api/characters', authToken, characters);
+app.use('/api/characters',/*  authToken, */ characters);
 app.use('/api/series', /* authToken, */ series);
 app.use('/api/movies',/*  authToken, */ movies);
 

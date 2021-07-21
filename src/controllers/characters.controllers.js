@@ -9,9 +9,7 @@ export const getListCharacters = async (req, res) => {
     if (!characters) {
       res.send('There are no characters in the list')
     }
-
     res.json({ characters }).status(200)
-
   } catch (error) {
     console.log(error);
   }
@@ -20,19 +18,18 @@ export const getListCharacters = async (req, res) => {
 export const getFullCharacters = async (req, res) => {
   try {
     let characters = await Character.findAll({ include: Movie })
-    if (characters) {
-      res.json({ data: characters })
-    } else {
-      res.send('There are no characters in the list')
+    if (!characters) {
+      res.json({ message: 'There are no characters on list' })
     }
+    res.json({ data: characters })
   } catch (error) {
-    console.log(error);
+    res.json({ error })
   }
 }
 
 export const createCharacter = async (req, res) => {
   try {
-    const { img, name, age, weight, history, id_movie, id_serie } = req.body;
+    const { img, name, age, weight, history } = req.body;
     let newCharacter = await Character.create({
       img,
       name,
@@ -43,31 +40,17 @@ export const createCharacter = async (req, res) => {
       fields: ['img', 'name', 'age', 'weight', 'history'],
     })
 
-    if (id_serie == 0) {
-      console.log('pass')
-    } else {
-      await newCharacter.addSeries([id_serie])
-    }
-
-    if (id_serie == 0) {
-      console.log('pass')
-    } else {
-      await newCharacter.addMovies([id_movie])
-    }
-
-
-    if (newCharacter) {
-      res.json({
-        message: `Character ${name} was created Successfully`
-      });
-      console.log({ data: newCharacter })
-    } else {
+    if (!newCharacter) {
       res.json({
         message: 'Something has gone wrong'
       });
     }
+    res.json({
+      message: `Character ${name} was created Successfully`
+    });
+
   } catch (error) {
-    console.log(error);
+    res.json({ error })
   }
 }
 

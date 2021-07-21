@@ -4,6 +4,7 @@ import { checkUser } from '../querys/Users/userFindOne'
 import { checkUsername } from '../querys/Users/userFindByUsername'
 import { encodePassword } from '../helpers/hashPassword'
 import { getToken } from '../helpers/generateToken'
+import { USER_EXISTS, USER_NOT_CREATED, PASSWORD_NOT_MATCHED, USER_NOT_EXISTS, WELCOME } from '../const/const'
 
 
 export const register = async (req, res) => {
@@ -14,7 +15,7 @@ export const register = async (req, res) => {
 
     if (user || alias) {
       return res.status(409).json({
-        message: 'User already exists'
+        message: USER_EXISTS
       })
     }
 
@@ -29,7 +30,7 @@ export const register = async (req, res) => {
 
     if (!newUser) {
       return res.status(500).json({
-        message: 'User was not created'
+        message: USER_NOT_CREATED
       })
     }
 
@@ -50,20 +51,20 @@ export const login = async (req, res) => {
 
     if (!user) {
       return res.json({
-        message: 'User not exists'
+        message: USER_NOT_EXISTS
       }).status(404)
     }
 
     const matchedPassword = bcrypt.compare(password, user.password)
     if (!matchedPassword) {
       return res.json({
-        message: 'The passwords No match'
+        message: PASSWORD_NOT_MATCHED
       }).status(401)
     }
 
     const token = getToken(user)
     return res.json({
-      message: `Welcome User ${email}`,
+      message: `${WELCOME} ${user.username}`,
       token
     }).status(201)
 
