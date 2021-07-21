@@ -22,7 +22,7 @@ Once cloned this repository, go to the path where are this project and run the f
 
   **npm install**
   
-with this you has already to run the project
+with this you have already to run the project
 
 ### Deployment
 Once that you has instaled the dependencies, run the follow command
