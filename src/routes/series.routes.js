@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getSeries, getFullSeries, createSerie, updateSerieById, deleteSerieById, searchSerie } from '../controllers/series.controllers'
+import { getSeries, getFullSeries, createSerie, updateSerieById, deleteSerieById, searchSerie } from '../controllers/Series/series.controllers'
 
 const router = Router();
 

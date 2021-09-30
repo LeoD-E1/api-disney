@@ -1,5 +1,6 @@
-import Character from '../models/characters.models';
-import Movie from '../models/movies.models';
+import Character from '../../models/characters.models';
+import Movie from '../../models/movies.models';
+import Serie from '../../models/series.models';
 
 export const getListCharacters = async (req, res) => {
   try {
@@ -11,13 +12,13 @@ export const getListCharacters = async (req, res) => {
     }
     res.json({ characters }).status(200)
   } catch (error) {
-    console.log(error);
+    res.json({ error })
   }
 }
 
 export const getFullCharacters = async (req, res) => {
   try {
-    let characters = await Character.findAll({ include: Movie })
+    let characters = await Character.findAll({ include: [Movie, Serie] })
     if (!characters) {
       res.json({ message: 'There are no characters on list' })
     }
@@ -55,9 +56,9 @@ export const createCharacter = async (req, res) => {
 }
 
 export const updateCharacterById = async (req, res) => {
+  const { id } = req.params;
+  const { img, name, age, weight, history } = req.body;
   try {
-    const { id } = req.params;
-    const { img, name, age, weight, history } = req.body;
     let characters = await Character.findAll({
       attributes: ['id_character', 'img', 'name', 'age', 'weight', 'history'],
       where: {
@@ -85,7 +86,7 @@ export const updateCharacterById = async (req, res) => {
       data: characters
     });
   } catch (error) {
-    console.log(error);
+    res.json({ error })
   }
 }
 
@@ -103,7 +104,7 @@ export const deleteCharacterById = async (req, res) => {
       count: countDeletedCharacters
     });
   } catch (error) {
-    console.log(error)
+    res.json({ error })
   }
 }
 
@@ -112,7 +113,7 @@ export const searchCharacter = async (req, res) => {
 
   const character = await Character.findAll({
     where: { name },
-    include: Movie
+    include: [Movie, Serie]
   })
   if (character == 0) {
     res.json({

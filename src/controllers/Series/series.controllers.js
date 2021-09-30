@@ -1,6 +1,6 @@
-import Serie from '../models/series.models'
-import Character from '../models/characters.models';
-import Character_Serie from '../models/Character_Serie.models';
+import Serie from '../../models/series.models'
+import Character from '../../models/characters.models';
+import Character_Serie from '../../models/Character_Serie.models';
 
 export const getSeries = async (req, res) => {
   try {
@@ -44,15 +44,16 @@ export const createSerie = async (req, res) => {
       fields: ['img', 'title', 'rating', 'releasedate', 'gender']
     })
 
-    if (newSerie) {
-      res.json({
-        message: `${title} was saved successfully`
-      })
-    } else {
-      res.json({ message: 'Some has gone wrong' });
+    if (!newSerie) {
+      res.json({ message: 'Something has gone wrong' });
     }
+
+    res.json({
+      message: `${title} was saved successfully`
+    })
+
   } catch (error) {
-    console.log(error)
+    res.json({ error })
   }
 }
 

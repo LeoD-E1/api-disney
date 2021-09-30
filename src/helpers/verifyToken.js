@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import users from '../routes/users.routes'
+import { NO_CREDENTIALS, ERROR } from '../const/const'
 
 require('dotenv').config()
 
@@ -10,12 +10,12 @@ async function authToken(req, res, next) {
 
   if (!token) {
     res.status(403).json({
-      message: 'You have not the credentials, Login for it'
-    }).redirect(users)
+      message: NO_CREDENTIALS
+    })
   }
 
   jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-    if (err) return res.sendStatus(404).json({ message: 'An error has ocurred' })
+    if (err) return res.sendStatus(404).json({ message: ERROR })
     req.user = user
     console.log(user);
     next();

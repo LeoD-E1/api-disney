@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
-import User from '../models/users.models';
-import { checkUser } from '../querys/Users/userFindOne'
-import { checkUsername } from '../querys/Users/userFindByUsername'
-import { encodePassword } from '../helpers/hashPassword'
-import { getToken } from '../helpers/generateToken'
-import { USER_EXISTS, USER_NOT_CREATED, PASSWORD_NOT_MATCHED, USER_NOT_EXISTS, WELCOME } from '../const/const'
+import User from '../../models/users.models';
+import { checkUser } from '../../querys/Users/userFindOne'
+import { checkUsername } from '../../querys/Users/findUserByUsername'
+import { encodePassword } from '../../helpers/hashPassword'
+import { getToken } from '../../helpers/generateToken'
+import { USER_EXISTS, USER_NOT_CREATED, PASSWORD_NOT_MATCHED, USER_NOT_EXISTS, WELCOME } from '../../const/const'
 
 
 export const register = async (req, res) => {
