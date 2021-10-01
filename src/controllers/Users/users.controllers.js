@@ -16,6 +16,7 @@ export const register = async (req, res) => {
   try {
     const { email, password, username } = req.body;
     const user = await checkUser(email);
+    console.log(user);
     const alias = await checkUsername(username);
 
     if (user || alias) {
